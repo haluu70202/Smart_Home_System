@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>E-home</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <header class="header-header">
+      <div class="header-container">
+        <div class="header-logo">
+          <img src="./images/logo.png" width="60" height="60" alt="">
+        </div>
+        <div class="header-appName">E-Home</div>
+        <div class="header-hello">Bảng điều khiển</div>
+        <div class="clock">
+          <div class="time">
+            <span class="hours">00</span>
+            <span>:</span>
+            <span class="minutes">00</span>
+            <span class="session">AM</span>  
+          </div>
+          <div class="calendar">
+            <span class="day-name">Sunday</span>,
+            <span class="day-number">5</span>
+            <span style="margin-left: 5px;">Tháng</span>
+            <span class="month-name">March</span>
+            <span class="year">2023</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class = "container">
+      <div class="sensor-devices">
+        <div class = "item1">
+          <!-- Hiển thị nhiệt độ -->
+          <div class = "item sensor-style">
+            <div class="icon">
+              <img src="./images/temperature1.png" width="60" height="60" alt="">
+            </div>
+            <div class="information">
+              <div class="value-name">Nhiệt độ phòng</div>
+              <div class="sensor-value">
+                <span id="temp-value">-</span>
+                <span class="units">°C</span>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Hiển thị độ sáng -->
+          <div class = "item sensor-style">
+            <div class="icon">
+              <img src="./images/lux1.png" width="60" height="60" alt="">
+            </div>
+            <div class="information">
+              <div class="value-name">Độ sáng</div> 
+              <div class="sensor-value">
+                <span id="lux-value">-</span>
+                <span class="units">LUX</span>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Hiển thị độ ẩm -->
+          <div  class = "item sensor-style">
+            <div class="icon">
+              <img src="./images/humidity1.png" width="60" height="60" alt="">
+            </div>
+            <div class="information">
+              <div class="value-name">Độ ẩm</div> 
+              <div class="sensor-value">
+                <span id="humid-value"></span>
+                <span class="units">%</span>
+              </div>  
+            </div>
+            
+          </div>
+        </div>
+  
+        <div class = "item2">
+          <div class="devices">
+            <div class="device-title">
+              <span>Thiết bị</span>
+            </div>
+            <div class="device-part">
+              <!-- Đèn: toggle-button để tắt bật đèn -->
+              <div class = "item device-details led">
+                <div class="device-name">Đèn</div>
+                <img src="./images/led1.png" width="100" height="120" alt="">
+                <div onclick = "changeLed(event)">
+                  <input name = "value" id="toggle-btn-led" type="checkbox" checked data-toggle="toggle" data-on="Bật" data-off="Tắt" data-size="md" data-style="ios" value = "1">
+                </div>
+                <!-- <p id="led-value"></p> -->
+              </div>
+
+              <div class = "item device-details tv">
+                <div class="device-name">TV</div>
+                <img src="./images/tv.png" width="120" height="120" alt="">
+                <div onclick = "changeTV(event)">
+                  <input name = "value1" id="toggle-btn-tv" type="checkbox" checked data-toggle="toggle" data-on="Bật" data-off="Tắt" data-size="md" data-style="ios" value = "1">
+                </div>
+              </div>
+    
+              <!-- Quạt: 4 nút: Tắt, chậm, trung bình, nhanh -->
+              <div class = "item device-details fan">
+                <div class="device-name">Quạt</div>
+                <img src="./images/fan1.png" width="120" height="120" alt="">
+                <div class = "group-button">
+                  <button class = "button-fan" id="fan-off" name = "off" onclick = "changeFan(event)">Tắt</button>
+                  <button class = "button-fan" id="fan-low" name = "low" onclick = "changeFan(event)">Chậm</button>
+                  <button class = "button-fan" id="fan-medium" name = "medium" onclick = "changeFan(event)">Vừa</button>
+                  <button class = "button-fan" id="fan-high" name = "high" onclick = "changeFan(event)">Nhanh</button>
+                </div>
+            
+                <!-- <div style = "font-size: 30px; "class="sensor-value">
+                  <span>Tốc độ:  </span> 
+                  <span id="speed-value">-</span>
+                  <span class="units">%</span>
+                </div> -->
+              </div>
+            </div>
+          </div>
+           
+  
+            <!-- Trợ lý ảo: Thông báo khi vượt ngưỡng -->
+            <div class = "item assistant">
+              <span>Trợ lý ảo</span> 
+              <p id="assistant-value"> - </p>
+            </div>
+        </div>
+      </div>
+      
+      <div class="history-chart">
+        <div class = "item3">
+          <!-- Hiển thị biểu đồ -->
+          <div class = "item">
+            <div class = "title-chart">Lịch sử nhiệt độ</div> 
+            <!-- Biểu đồ nhiệt độ -->
+            <div class="chart">
+              <canvas id="tempChart"></canvas>
+            </div> 
+          </div>
+  
+          <!-- Biểu độ hiển thị độ sáng -->
+          <div class = "item">
+            <div class = "title-chart">Lịch sử độ sáng</div> 
+            <p id=""></p>
+            <div class="chart">
+              <canvas id="luxChart"></canvas>
+            </div>
+          </div>
+  
+            <!-- Biểu đồ hiển thị độ ẩm -->
+          <div class = "item">
+            <div class = "title-chart">Lịch sử độ ẩm</div> 
+            <p id=""></p>
+            <div class="chart">
+                <canvas id="humidChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+    <div style = "display: flex; flex-direction: row;">
+      <!-- Form test biểu đồ hoạt động khi dữ liệu thay đổi -->
+      <!-- <form>
+        <input type="text" name="valueTemp" >
+        <button onClick="changeTemp(event)">POST TEMP</button>
+      </form>
+
+      <form>
+        <input type="text" name="valueLux" >
+        <button onClick="changeLux(event)">POST LUX</button>
+      </form>
+
+      <form>
+        <input type="text" name="valueHumid" >
+        <button onClick="changeHumid(event)">POST HUMID</button>
+      </form> -->
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      
+      const tempValue = document.getElementById("temp-value");
+      const luxValue = document.getElementById("lux-value");
+      const humidValue = document.getElementById("humid-value");
+      // const ledValue = document.getElementById("led-value");
+      const assistantValue = document.getElementById("assistant-value");
+      const fanspValue = document.getElementById("speed-value");
+      const currentValue = document.querySelector('[name="value"]')
+      const currentValue1 = document.querySelector('[name="value1"]')
+      // Biến dùng để kiểm soát có biểu đồ hay chưa
+      let tempChart, luxChart, humidChart
+
+      // Biến dùng để kiểm tra xem gửi thông báo ngưỡng đến người dùng chưa
+      let isAlertLux = false
+
+      const fetchData = async () => {
+        // Lấy dữ liệu của các cảm biến
+        const responseTemp = await axios.get("http://localhost:8080/lastTemp");
+        tempValue.innerHTML = `${responseTemp.data.value}`;
+
+        const responseLux = await axios.get("http://localhost:8080/lastLux");
+        luxValue.innerHTML = `${responseLux.data.value}`;
+        
+        const responseHumid = await axios.get("http://localhost:8080/lastHumid");
+        humidValue.innerHTML = `${responseHumid.data.value}`;
+        
+         /* if(responseLux.data.value < 400 && isAlertLux == false) {
+            const alertLux = confirm(`Giá trị độ sáng đang là ${responseHumid.data.value}, quá thấp. Bạn có muốn bật đèn không ?`)
+            isAlertLux = true;
+            if(alertLux) {
+                //Bấm OK    
+            }else {
+                // Bấm No
+            }
+          }  */
+        
+        const responseLed = await axios.get("http://localhost:8080/lastLed");
+        // ledValue.innerHTML = `Giá trị: ${responseLed.data.value}`;
+        //Sét trạng thái ban đầu của nút Tắt/bật đèn, 0=>off
+        if(responseLed.data.value == 0){
+          $('#toggle-btn-led').bootstrapToggle('off')
+          currentValue.value = 0;
+        } 
+
+        const responseTV = await axios.get("http://localhost:8080/lastTV");
+        if(responseTV.data.value == 0){
+          $('#toggle-btn-tv').bootstrapToggle('off')
+          currentValue1.value = 0;
+        } 
+        
+        const responseAssistant = await axios.get("http://localhost:8080/lastAssistant");
+        assistantValue.innerHTML = `${responseAssistant.data.value}`;
+        
+        // const reponseFansp = await axios.get("http://localhost:8080/lastFansp");
+        // fanspValue.innerHTML = `${reponseFansp.data.value}`;
+        
+        const tempChartData = await axios.get("http://localhost:8080/tempChart");
+        const luxChartData = await axios.get("http://localhost:8080/luxChart");
+        const humidChartData = await axios.get("http://localhost:8080/humidChart");
+        const temp = document.getElementById('tempChart').getContext('2d');
+        const lux = document.getElementById('luxChart').getContext('2d');
+        const humid = document.getElementById('humidChart').getContext('2d');
+      
+        // Nếu chưa có biểu đồ => tạo biểu đồ trong hàm else
+        // Nếu có biểu đồ => cập nhất biểu đồ trong hàm if
+    
+        if (tempChart) {
+          tempChart.data.labels = tempChartData.data.map(item => item.name);
+          tempChart.data.datasets[0].data = tempChartData.data.map(item => item.temperatureOfChip);
+          tempChart.update();
+        } else {
+          tempChart = new Chart(temp, {
+            type: 'line',
+            data: {
+              labels: tempChartData.data.map(item => item.name),
+              datasets: [{
+                label: 'Nhiệt độ',
+                data: tempChartData.data.map(item => item.temperatureOfChip),
+                borderColor: '3e21fb',
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 3
+            }
+          });
+        }
+
+        if (luxChart) {
+          luxChart.data.labels = luxChartData.data.map(item => item.name);
+          luxChart.data.datasets[0].data = luxChartData.data.map(item => item.luxOfChip);
+          luxChart.update();
+        } else {
+          console.log(luxChartData)
+          luxChart = new Chart(lux, {
+            type: 'line',
+            data: {
+              labels: luxChartData.data.map(item => item.name),
+              datasets: [{
+                label: 'Độ sáng',
+                data: luxChartData.data.map(item => item.luxOfChip),
+                borderColor: '#dc1717',
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 3
+            }
+          });
+        }
+
+        if (humidChart) {
+          humidChart.data.labels = humidChartData.data.map(item => item.name);
+          humidChart.data.datasets[0].data = humidChartData.data.map(item => item.humidOfChip);
+          humidChart.update();
+        } else {
+          humidChart = new Chart(humid, {
+            type: 'line',
+            data: {
+              labels: humidChartData.data.map(item => item.name),
+              datasets: [{
+                label: 'Độ ẩm',
+                data: humidChartData.data.map(item => item.humidOfChip),
+                borderColor: '#2eb05e',
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 3
+            }
+          });
+        }
+
+        
+      }      
+      fetchData();
+      // Lấy dữ liệu mới mỗi 3s
+      // Thời gian lấy dữ liệu không được quá thấp vì server chạy không nổi
+      setInterval(fetchData, 3000)  
+    </script>
+    <script>
+
+      // Hàm tắt/bật đèn
+      function changeLed(e) {
+        // Ngăn trạng thái chuyển trang khi POST
+        e.preventDefault();
+        let updatedValue
+        let toggleLed = document.querySelector("#toggle-btn-led")
+        // Kiểm tra giá trị toggleLed trước đang là bao nhiêu
+        // Nếu là 0 => POST 1, value = 1
+        // Nếu là 1 => POST 0, value = 0
+        if(toggleLed.value == "1") {
+          updatedValue = "0"
+          toggleLed.value = 0
+        }else {
+          updatedValue = "1"
+          toggleLed.value = 1
+        }
+        axios.post('/lastLed', { value: updatedValue})
+          .then(response => console.log(response))
+          .catch(error => console.error(error));
+      }
+
+      // Hàm tắt/bật TV
+      function changeTV(e) {
+        // Ngăn trạng thái chuyển trang khi POST
+        e.preventDefault();
+        let updatedValueTV
+        let toggleTV = document.querySelector("#toggle-btn-tv")
+        // Kiểm tra giá trị toggleTV trước đang là bao nhiêu
+        // Nếu là 0 => POST 1, value = 1
+        // Nếu là 1 => POST 0, value = 0
+        if(toggleTV.value == "1") {
+          updatedValueTV = "0"
+          toggleTV.value = 0
+        }else {
+          updatedValueTV = "1"
+          toggleTV.value = 1
+        }
+        axios.post('/lastTV', { value: updatedValueTV})
+          .then(response => console.log(response))
+          .catch(error => console.error(error));
+      }
+
+      // Hàm thay đổi độ lớn của quạt
+      function changeFan(e){
+        e.preventDefault();
+        let value;
+        const valueChangeFan = e.target.name
+        // Kiểm tra xem bấm vào nút gì, off->0, low->30, medium->60, high->100
+        if(valueChangeFan == "off") {
+          value = "0"
+        }else if(valueChangeFan == "low") {
+          value = "30"
+        }else if(valueChangeFan == "medium") {
+          value = "60"
+        }else {
+          value = "100"
+        }
+        axios.post('/lastFan', { value: value})
+          .then(response => console.log(response))
+          .catch(error => console.error(error))
+      }
+      
+      //Hàm hiện nút đã bấm
+      const btnOff = document.getElementById("fan-off");
+      const btnLow = document.getElementById("fan-low");
+      const btnMedium = document.getElementById("fan-medium");
+      const btnHigh = document.getElementById("fan-high");
+      btnOff.addEventListener('click', () => {
+        btnOff.style.color = '#FF6347';
+        btnLow.style.color = '#555';
+        btnMedium.style.color = '#555';
+        btnHigh.style.color = '#555';
+      });
+      btnLow.addEventListener('click', () => {
+        btnLow.style.color = '#FF6347';
+        btnOff.style.color = '#555';
+        btnMedium.style.color = '#555';
+        btnHigh.style.color = '#555';
+      });
+      btnMedium.addEventListener('click', () => {
+        btnMedium.style.color = '#FF6347';
+        btnLow.style.color = '#555';
+        btnOff.style.color = '#555';
+        btnHigh.style.color = '#555';
+      });
+      btnHigh.addEventListener('click', () => {
+        btnHigh.style.color = '#FF6347';
+        btnLow.style.color = '#555';
+        btnMedium.style.color = '#555';
+        btnOff.style.color = '#555';
+      });
+
+      // Hàm check sự thay đổi của biểu đồ nhiệt độ khi có nhiệt độ mới
+      function changeTemp(e){
+      e.preventDefault();
+      const tempNew = document.querySelector('[name="valueTemp"]').value       
+        axios.post('/lastTemp', { value: tempNew})
+          .then(response => console.log(response))
+          .catch(error => console.error(error))
+      }
+
+      function changeLux(e){
+        e.preventDefault();
+        const luxNew = document.querySelector('[name="valueLux"]').value       
+          axios.post('/lastLux', { value: luxNew})
+            .then(response => console.log(response))
+            .catch(error => console.error(error))
+      }
+
+      function changeHumid(e){
+        e.preventDefault();
+        const humidNew = document.querySelector('[name="valueHumid"]').value       
+          axios.post('/lastHumid', { value: humidNew})
+            .then(response => console.log(response))
+            .catch(error => console.error(error))
+      }
+
+        
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
